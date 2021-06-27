@@ -1,0 +1,60 @@
+* {
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	height: auto;
+	margin: 0;
+}
+.page-container {
+	width: 50%;
+}
+header {
+	height: 50px;
+	
+}
+.highscores {
+	margin: 10px;
+	float: left;
+}
+
+.timer {
+	display: flex;
+	align-items: center;/*center timer in the middle of header*/
+	float: right;
+}
+.timer p {
+	display: inline;
+}
+
+main {
+	width: 100%;
+	height: auto;
+}
+
+.card {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+#card-header {
+	text-align: center;
+}
+#card-text {
+	text-align: center;
+}
+
+.card-answers {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.card-answers ol{
+	width: 50%;
+}
