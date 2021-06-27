@@ -15,7 +15,7 @@ body {
 }
 header {
 	height: 50px;
-	
+	margin-bottom: 100px;	
 }
 .highscores {
 	margin: 10px;
@@ -36,25 +36,48 @@ main {
 	height: auto;
 }
 
-.card {
+.card-start-container {
+	width: 100%;
+	display: none;
+	justify-content: center;
+}
+
+.card-start {
+	display: block;
+	width: 50%;
+	margin: 15px;	
+}
+
+.start-button-container {
 	width: 100%;
 	display: flex;
+	justify-content: center;
+}
+
+.card-question {
+	width: 100%;
+	display: none;
 	flex-direction: column;
 	justify-content: center;
 }
-#card-header {
+#card-question-header {
 	text-align: center;
 }
-#card-text {
+#card-question-text {
 	text-align: center;
 }
 
-.card-answers {
+.card-question-answers {
 	width: 100%;
 	display: flex;
 	justify-content: center;
 }
 
-.card-answers ol{
+.card-question-answers ol{
 	width: 50%;
+}
+
+.card-final-score-container {
+	display: flex;
+	justify-content: center;
 }
