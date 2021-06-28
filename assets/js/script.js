@@ -46,6 +46,13 @@ var question2 = new question(
 	[false, false, false, true]
 );
 
+var question3 = new question(
+	"Using the flex model, which property allows  the elements of a flexbox to be vertically centered?",
+	["align-items", "justify-items", "display", "flex"],
+	[true, false, false, false]
+)
+
+
 var questions = [question1, question2];
 
 function startQuiz() {
