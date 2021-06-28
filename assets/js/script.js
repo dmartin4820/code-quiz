@@ -4,6 +4,7 @@ var cardQuestion = document.getElementById("card-question");
 var cardQuestionHeader = document.getElementById("card-question-header");
 var cardFinalScore = document.getElementById("card-final-score-container");
 var finalScore = document.getElementById("final-score");
+var endHeader = document.getElementById("end-header");
 var timer = document.getElementById("timeleft");
 var answer1 = document.getElementById("answer1");
 var answer2 = document.getElementById("answer2");
@@ -12,7 +13,8 @@ var answer4 = document.getElementById("answer4");
 var answers = [answer1, answer2, answer3, answer4];
 
 var questionIndex = 0;
-var timeLeft = 90;
+var timeLeft = 1;
+timer.innerHTML = timeLeft + " seconds left";
 var interval;
 
 class question {
@@ -53,7 +55,7 @@ var question3 = new question(
 )
 
 
-var questions = [question1, question2];
+var questions = [question1, question2, question3];
 
 function startQuiz() {
 	startButton.addEventListener("click", function(event) {
@@ -68,6 +70,7 @@ function startTimer() {
 		timeLeft--;
 		timer.innerHTML = timeLeft + " seconds left";	
 		if (timeLeft === 0) {
+			endHeader.innerHTML = "Time's up!";
 			endQuiz();
 		}
 	}, 1000);
@@ -93,6 +96,7 @@ function displayNextQuestion(event) {
 	}
 
 	if (questionIndex !== 1 && questionIndex >= questions.length - 1) {
+		endHeader.innerHTML = "Quiz completed!";
 		endQuiz();
 		return;
 	}
@@ -107,7 +111,7 @@ function displayNextQuestion(event) {
 
 	for(var i = 0; i < answers.length; i++) {
 		answer = questions[questionIndex].answers[i];
-		answers[i].innerHTML = answer;
+		answers[i].innerHTML = (i+1) + ". " + answer;
 	}
 	questionIndex++;
 }

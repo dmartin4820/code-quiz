@@ -27,7 +27,7 @@
 					<h2>Coding Quiz Challenge</h2>
 					<p>Try to answer all the questions correctly as fast as possible. Each wrong answer will deduct 10 seconds from the timer.</p>
 					<div class="start-button-container">
-						<button type="button" id="start-button">Start Quiz
+						<button type="button" id="start-button" class="button">Start Quiz
 						</button>
 					</div>
 
@@ -37,22 +37,22 @@
 				<h2 id="card-question-header">Header</h2>
 				<p id="card-question-text"></p>
 				<div class="card-question-answers">
-					<ol>
-						<li><button type="button" id="answer1" data-id="0">this is a question</button></li>
-						<li><button type="button" id="answer2" data-id="1">also a question</button></li>	
-						<li><button type="button" id="answer3" data-id="2"></button></li>
-						<li><button type="button" id="answer4" data-id="3"></button></li>
-					</ol>
+					<ul>
+						<li><button type="button" id="answer1" class="button" data-id="0">this is a question</button></li>
+						<li><button type="button" id="answer2" class="button" data-id="1">also a question</button></li>	
+						<li><button type="button" id="answer3" class="button" data-id="2"></button></li>
+						<li><button type="button" id="answer4" class="button" data-id="3"></button></li>
+					</ul>
 				</div>
 			</div>
 			<div class="card-final-score-container hide" id="card-final-score-container">		
 				<div class="card-final-score">
-					<h2>Time's up!</h2>
+					<h2 id="end-header">Time's up!</h2>
 					<p id="final-score"></p>
 					<form>
 						<label for="highscore-name">Enter Name:</label>
 						<input type="text" id="highscore-name" name="highscore-name"/>
-						<input type="submit" value="Submit">
+						<input class="button" type="submit" value="Submit">
 					</form>
 				</div>	
 			</div>
