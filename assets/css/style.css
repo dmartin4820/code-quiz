@@ -27,8 +27,9 @@ header {
 	align-items: center;/*center timer in the middle of header*/
 	float: right;
 }
-.timer p {
-	display: inline;
+
+#timeleft-label {
+	margin-right: 10px;
 }
 
 main {
