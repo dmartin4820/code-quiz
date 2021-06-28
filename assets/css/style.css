@@ -92,7 +92,12 @@ main {
 	width: 50%;
 }
 
-.card-final-score-container {
+.card-final-score-container.show {
+	display: flex;
+	justify-content: center;
+}
+
+.card-final-score-container.hide {
 	display: none;
 	justify-content: center;
 }

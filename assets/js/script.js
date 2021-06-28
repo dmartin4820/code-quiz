@@ -2,6 +2,8 @@ var startButton = document.getElementById("start-button");
 var startButtonContainer = document.getElementById("card-start-container");
 var cardQuestion = document.getElementById("card-question");
 var cardQuestionHeader = document.getElementById("card-question-header");
+var cardFinalScore = document.getElementById("card-final-score-container");
+var finalScore = document.getElementById("final-score");
 var timer = document.getElementById("timeleft");
 var answer1 = document.getElementById("answer1");
 var answer2 = document.getElementById("answer2");
@@ -11,6 +13,7 @@ var answers = [answer1, answer2, answer3, answer4];
 
 var questionIndex = 0;
 var timeLeft = 90;
+var interval;
 
 class question {
 	constructor(q,a,b) {
@@ -54,32 +57,45 @@ function startQuiz() {
 	})
 }
 function startTimer() {
-	var interval = setInterval(function() {
+	interval = setInterval(function() {
 		timeLeft--;
 		timer.innerHTML = timeLeft + " seconds left";	
 		if (timeLeft === 0) {
-			clearInterval(interval);
+			endQuiz();
 		}
 	}, 1000);
 }
 
-function deductTime() {
-	timeLeft -= 10;
+function endQuiz() {
+	clearInterval(interval);
+	cardQuestion.setAttribute("class", "card-question hide");
+	cardFinalScore.setAttribute("class", "card-final-score-container show");
+	finalScore.innerHTML = "Your final score is " + Math.round(calculateScore());
+}
+
+function calculateScore() {
+	return 100 * timeLeft/90;
 }
 
 function displayNextQuestion(event) {
+	var selectedAnswerId = event.path[0].getAttribute("data-id");
+	if (questionIndex !== 0 && 
+		!questions[questionIndex - 1].answerBools[selectedAnswerId]) {
+			timeLeft -= 10;	
+			timer.innerHTML = timeLeft + " seconds left";
+	}
+
+	if (questionIndex !== 1 && questionIndex >= questions.length - 1) {
+		endQuiz();
+		return;
+	}
+	
 	answer1.addEventListener("click", displayNextQuestion);
 	answer2.addEventListener("click", displayNextQuestion);
 	answer3.addEventListener("click", displayNextQuestion);
 	answer4.addEventListener("click", displayNextQuestion);
 
-	var selectedAnswerId = event.path[0].getAttribute("data-id");
-	if (questionIndex !== 0 && 
-		!questions[questionIndex - 1].answerBools[selectedAnswerId]) {
-			timeLeft -= 10;	
-	}
 	
-
 	cardQuestionHeader.innerHTML = questions[questionIndex].question;
 
 	for(var i = 0; i < answers.length; i++) {
