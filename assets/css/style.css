@@ -36,9 +36,15 @@ main {
 	height: auto;
 }
 
-.card-start-container {
+.card-start-container.show {
 	width: 100%;
 	display: flex;
+	justify-content: center;
+}
+
+.card-start-container.hide {
+	width: 100%;
+	display: none;
 	justify-content: center;
 }
 
@@ -54,12 +60,20 @@ main {
 	justify-content: center;
 }
 
-.card-question {
+.card-question.show {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.card-question.hide {
 	width: 100%;
 	display: none;
 	flex-direction: column;
 	justify-content: center;
 }
+
 #card-question-header {
 	text-align: center;
 }
