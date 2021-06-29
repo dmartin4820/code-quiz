@@ -14,49 +14,59 @@
 </head>
 <body>
 	<div class="page-container">
-		<header>
-			<div class="header-highscores-container ">
-				<a href="#" class="highscores button">View Highscores</a>
-			</div>
-			<div class="header-timer-container hide" id="header-timer">
-				<p id="timeleft-label">Time Left: 90 s left</p>
-			</div>
-		</header>
-		<main>
-			<div class="card-start-container show" id="card-start-container">
-				<div class="card-start">
-					<h2 class="page-header">Coding Quiz Challenge</h2>
-					<p>Try to answer all the questions correctly as fast as possible. Each wrong answer will deduct 10 seconds from the timer.</p>
-					<div class="start-button-container">
-						<button type="button" id="start-button" class="button">Start Quiz
-						</button>
-					</div>
+		<section class="quiz">
+			<header>
+				<div class="header-highscores-container ">
+					<a href="#" class="highscores button">View Highscores</a>
+				</div>
+				<div class="header-timer-container hide" id="header-timer">
+					<p id="timeleft-label">Time Left: 90 s left</p>
+				</div>
+			</header>
+			<main>
+				<div class="card-start-container show" id="card-start-container">
+					<div class="card-start">
+						<h2 class="page-header">Coding Quiz Challenge</h2>
+						<p>Try to answer all the questions correctly as fast as possible. Each wrong answer will deduct 10 seconds from the timer.</p>
+						<div class="start-button-container">
+							<button type="button" id="start-button" class="button">Start Quiz
+							</button>
+						</div>
 
-				</div>
-			</div>	
-			<div class="card-question hide" id="card-question">
-				<h2 id="card-question-header" class="page-header">Header</h2>
-				<div class="card-question-answers", id="card-question-answers">
-					<ul>
-						<li><button type="button" id="answer1" class="button" data-id="0">this is a question</button></li>
-						<li><button type="button" id="answer2" class="button" data-id="1">also a question</button></li>	
-						<li><button type="button" id="answer3" class="button" data-id="2"></button></li>
-						<li><button type="button" id="answer4" class="button" data-id="3"></button></li>
-					</ul>
-				</div>
-			</div>
-			<div class="card-final-score-container hide" id="card-final-score-container">		
-				<div class="card-final-score">
-					<h2 id="end-header" class="page-header">Time's up!</h2>
-					<p id="final-score"></p>
-					<form id="highscore-form">
-						<label for="highscore-name">Enter Name:</label>
-						<input type="text" id="highscore-name" name="highscore-name"/>
-						<input class="button" id="submit-btn" type="submit" value="Submit">
-					</form>
+					</div>
 				</div>	
-			</div>
-		</main>
+				<div class="card-question hide" id="card-question">
+					<h2 id="card-question-header" class="page-header">Header</h2>
+					<div class="card-question-answers", id="card-question-answers">
+						<ul>
+							<li><button type="button" id="answer1" class="button" data-id="0">this is a question</button></li>
+							<li><button type="button" id="answer2" class="button" data-id="1">also a question</button></li>	
+							<li><button type="button" id="answer3" class="button" data-id="2"></button></li>
+							<li><button type="button" id="answer4" class="button" data-id="3"></button></li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-final-score-container hide" id="card-final-score-container">		
+					<div class="card-final-score">
+						<h2 id="end-header" class="page-header">Time's up!</h2>
+						<p id="final-score"></p>
+						<form id="highscore-form">
+							<label for="highscore-name">Enter Name:</label>
+							<input type="text" id="highscore-name" name="highscore-name"/>
+							<input class="button" id="submit-btn" type="submit" value="Submit">
+						</form>
+					</div>	
+				</div>
+			</main>
+		</section>
+		<section class="highscores-page hide">
+			<main>
+				<h1>Highscores</h1>
+				<ol id="highscore-list"></ol>
+			</main>
+
+		</section>
+
 	</div>
 	<script src="./assets/js/script.js"></script>
 </body>

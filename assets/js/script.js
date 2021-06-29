@@ -68,14 +68,6 @@ function startQuiz() {
 		cardQuestion.setAttribute("class", "card-question show")
 		displayNextQuestion(event);
 	})
-	formEl.addEventListener("submit", function (event) {
-		event.preventDefault();
-		var highscoreName = document.getElementById("highscore-name").value;
-		var highscore = [highscoreName, endScore];
-		localStorage.setItem("highScore", JSON.stringify(highscore));
-
-	})
-
 }
 function startTimer() {
 	interval = setInterval(function() {
@@ -93,11 +85,28 @@ function endQuiz() {
 	clearInterval(interval);
 	cardQuestion.setAttribute("class", "card-question hide");
 	cardFinalScore.setAttribute("class", "card-final-score-container show");
-	finalScore.innerHTML = "Your final score is " + Math.round(endScore);
+	finalScore.innerHTML = "Your final score is " + endScore;
+
+	formEl.addEventListener("submit", function (event) {
+		event.preventDefault();
+		var highscoreName = document.getElementById("highscore-name").value;
+		var highscore = [highscoreName, endScore];
+		localStorage.setItem("highScore", JSON.stringify(highscore));
+		populateHighscores()
+	})
 }
 
 function calculateScore() {
-	return 100 * timeLeft/90;
+	return Math.round(100 * timeLeft/90);
+}
+
+function populateHighscores() {
+	var highScoreList = document.getElementById("highscore-list");
+	var listItem = document.createElement("li");
+	var highScore = JSON.parse(localStorage.getItem("highScore"));
+	listItem.innerHTML = highScore[0] + " - " + highScore[1];
+
+	highScoreList.appendChild(listItem);
 }
 
 function displayNextQuestion(event) {
@@ -176,4 +185,5 @@ function displayCorrect() {
 	return;
 }
 
+populateHighscores();
 startQuiz();
