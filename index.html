@@ -15,16 +15,17 @@
 <body>
 	<div class="page-container">
 		<header>
-			<a href="#" class="highscores">View Highscores</a>
-			<div class="timer">
-				<p id="timeleft-label">Time Left: </p>
-				<p id="timeleft">90 seconds left</p>
+			<div class="header-highscores-container ">
+				<a href="#" class="highscores button">View Highscores</a>
+			</div>
+			<div class="header-timer-container">
+				<p id="timeleft-label">Time Left: 90 s left</p>
 			</div>
 		</header>
 		<main>
 			<div class="card-start-container show" id="card-start-container">
 				<div class="card-start">
-					<h2>Coding Quiz Challenge</h2>
+					<h2 class="page-header">Coding Quiz Challenge</h2>
 					<p>Try to answer all the questions correctly as fast as possible. Each wrong answer will deduct 10 seconds from the timer.</p>
 					<div class="start-button-container">
 						<button type="button" id="start-button" class="button">Start Quiz
@@ -34,9 +35,8 @@
 				</div>
 			</div>	
 			<div class="card-question hide" id="card-question">
-				<h2 id="card-question-header">Header</h2>
-				<p id="card-question-text"></p>
-				<div class="card-question-answers">
+				<h2 id="card-question-header" class="page-header">Header</h2>
+				<div class="card-question-answers", id="card-question-answers">
 					<ul>
 						<li><button type="button" id="answer1" class="button" data-id="0">this is a question</button></li>
 						<li><button type="button" id="answer2" class="button" data-id="1">also a question</button></li>	
@@ -47,7 +47,7 @@
 			</div>
 			<div class="card-final-score-container hide" id="card-final-score-container">		
 				<div class="card-final-score">
-					<h2 id="end-header">Time's up!</h2>
+					<h2 id="end-header" class="page-header">Time's up!</h2>
 					<p id="final-score"></p>
 					<form>
 						<label for="highscore-name">Enter Name:</label>

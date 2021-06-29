@@ -2,10 +2,11 @@ var startButton = document.getElementById("start-button");
 var startButtonContainer = document.getElementById("card-start-container");
 var cardQuestion = document.getElementById("card-question");
 var cardQuestionHeader = document.getElementById("card-question-header");
+var cardQuestionAnswersList = document.getElementById("card-question-answers").children[0];
 var cardFinalScore = document.getElementById("card-final-score-container");
 var finalScore = document.getElementById("final-score");
 var endHeader = document.getElementById("end-header");
-var timer = document.getElementById("timeleft");
+var timer = document.getElementById("timeleft-label");
 var answer1 = document.getElementById("answer1");
 var answer2 = document.getElementById("answer2");
 var answer3 = document.getElementById("answer3");
@@ -13,8 +14,9 @@ var answer4 = document.getElementById("answer4");
 var answers = [answer1, answer2, answer3, answer4];
 
 var questionIndex = 0;
-var timeLeft = 1;
-timer.innerHTML = timeLeft + " seconds left";
+var timeLeft = 90;
+var timerText = "Time Left: " + timeLeft + " s left"
+timer.innerHTML = timerText;
 var interval;
 
 class question {
@@ -68,7 +70,7 @@ function startQuiz() {
 function startTimer() {
 	interval = setInterval(function() {
 		timeLeft--;
-		timer.innerHTML = timeLeft + " seconds left";	
+		timer.innerHTML = "Time Left: " + timeLeft + " s left";	
 		if (timeLeft === 0) {
 			endHeader.innerHTML = "Time's up!";
 			endQuiz();
@@ -94,8 +96,9 @@ function displayNextQuestion(event) {
 			timeLeft -= 10;	
 			timer.innerHTML = timeLeft + " seconds left";
 	}
-
-	if (questionIndex !== 1 && questionIndex >= questions.length - 1) {
+	console.log(questionIndex);
+	console.log(questions.length);
+	if (questionIndex !== 1 && questionIndex > questions.length - 1) {
 		endHeader.innerHTML = "Quiz completed!";
 		endQuiz();
 		return;
