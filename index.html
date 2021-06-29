@@ -14,10 +14,10 @@
 </head>
 <body>
 	<div class="page-container">
-		<section class="quiz hide" id="quiz">
+		<section class="quiz" id="quiz">
 			<header>
 				<div class="header-highscores-container ">
-					<a href="#" class="highscores button">View Highscores</a>
+					<a href="#" class="highscores button" id="view-highscores">View Highscores</a>
 				</div>
 				<div class="header-timer-container hide" id="header-timer">
 					<p id="timeleft-label">Time Left: 90 s left</p>
@@ -51,18 +51,19 @@
 						<h2 id="end-header" class="page-header">Time's up!</h2>
 						<p id="final-score"></p>
 						<form id="highscore-form">
-							<label for="highscore-name">Enter Name:</label>
+							<label for="highscore-name">Enter Initials:</label>
 							<input type="text" id="highscore-name" name="highscore-name"/>
-							<input class="button" id="submit-btn" type="submit" value="Submit">
+							<input class="button" id="submit-btn" type="submit" value="Submit" data-submitted="false">
+							<button type="button" id="play-again" class="button">Play Again?</button>
 						</form>
 					</div>	
 				</div>
 			</main>
 		</section>
-		<section class="highscores-page" id="highscores-page">
+		<section class="highscores-page hide" id="highscores-page">
 			<main>
 				<h1>Highscores</h1>
-				<ol id="highscore-list"></ol>
+				<ol id="highscore-list" data-populated="false"></ol>
 				<div class="highscores-buttons">
 					<button type="button" id="go-back" class="button">Go Back</button>
 					<button type="button" id="clear-highscores" class="button">Clear Highscores</button>

@@ -8,8 +8,11 @@ const finalScore = document.getElementById("final-score");
 const goBack = document.getElementById("go-back");
 const clearHighscores = document.getElementById("clear-highscores");
 const highScoreList = document.getElementById("highscore-list");
+const viewHighscores = document.getElementById("view-highscores");
 const quiz = document.getElementById("quiz");
 const highScoresPage = document.getElementById("highscores-page");
+const submitBtn = document.getElementById("submit-btn");
+const playAgain = document.getElementById("play-again");
 const endHeader = document.getElementById("end-header");
 const timer = document.getElementById("timeleft-label");
 const formEl = document.getElementById("highscore-form");
@@ -73,6 +76,11 @@ function startQuiz() {
 		cardQuestion.setAttribute("class", "card-question show")
 		displayNextQuestion(event);
 	})
+	viewHighscores.addEventListener("click", function() {
+		quiz.setAttribute("class", "quiz hide");
+		highScoresPage.setAttribute("class", "highscores-page");
+		populateHighscores();
+	})
 	goBack.addEventListener("click", function() {
 		highScoresPage.setAttribute("class", "highscores-page hide");
 		quiz.setAttribute("class", "quiz");
@@ -98,19 +106,29 @@ function endQuiz() {
 
 	formEl.addEventListener("submit", function (event) {
 		event.preventDefault();
-		var highScoreName = document.getElementById("highscore-name").value;
-		
+		var submitted = submitBtn.dataset.submitted;
+		if (submitted === "false") {
+			var highScoreName = document.getElementById("highscore-name").value;
 
-		var storedScores = JSON.parse(localStorage.getItem("highScores"));
+
+			var storedScores = JSON.parse(localStorage.getItem("highScores"));
 		
-		if (storedScores === null) {
-			localStorage.setItem("highScores", JSON.stringify([[highScoreName, endScore]]));
-		} else {
-			storedScores.push([highScoreName, endScore]);
-			localStorage.setItem("highScores", JSON.stringify(storedScores));
+			if (storedScores === null) {
+				localStorage.setItem("highScores", JSON.stringify([[highScoreName, endScore]]));
+			} else {
+				storedScores.push([highScoreName, endScore]);
+				localStorage.setItem("highScores", JSON.stringify(storedScores));
+			}
+			submitBtn.dataset.submitted = "true";
 		}
 		populateHighscores()
 	})
+
+	playAgain.addEventListener("click", function(){
+		location.reload();
+	})
+
+
 }
 
 function calculateScore() {
@@ -121,21 +139,19 @@ function populateHighscores() {
 	quiz.setAttribute("class", "quiz hide");
 	highScoresPage.setAttribute("class", "highscores-page");
 
-	var highScores = localStorage.getItem("highScores");
-	if (highScores !== null) {
-		highScores = JSON.parse(highScores);
-		for (var i = 0; i < highScores.length; i++) {
-			var listItem = document.createElement("li");
-			listItem.innerHTML = highScores[i][0] + " - " + highScores[i][1];
-			highScoreList.appendChild(listItem);
+	if (highScoreList.dataset.populated === "false"){
+		var highScores = localStorage.getItem("highScores");
+		if (highScores !== null) {
+			highScores = JSON.parse(highScores);
+			for (var i = 0; i < highScores.length; i++) {
+				var listItem = document.createElement("li");
+				listItem.innerHTML = highScores[i][0] + " - " + highScores[i][1];
+				highScoreList.appendChild(listItem);
+			}
 		}
+		highScoreList.dataset.populated = "true";
 	}
-
-	goBack.addEventListener("click", function() {
-		location.reload();
-	})
-
-	console.log(window)
+	
 	clearHighscores.addEventListener("click", function() {
 		var length = highScoreList.childElementCount;
 		for (var i = 0; i < length; i++) {
