@@ -1,23 +1,25 @@
-var startButton = document.getElementById("start-button");
-var startButtonContainer = document.getElementById("card-start-container");
-var cardQuestion = document.getElementById("card-question");
-var cardQuestionHeader = document.getElementById("card-question-header");
-var cardQuestionAnswersList = document.getElementById("card-question-answers").children[0];
-var cardFinalScore = document.getElementById("card-final-score-container");
-var finalScore = document.getElementById("final-score");
-var endHeader = document.getElementById("end-header");
-var timer = document.getElementById("timeleft-label");
-var answer1 = document.getElementById("answer1");
-var answer2 = document.getElementById("answer2");
-var answer3 = document.getElementById("answer3");
-var answer4 = document.getElementById("answer4");
-var answers = [answer1, answer2, answer3, answer4];
+const startButton = document.getElementById("start-button");
+const startButtonContainer = document.getElementById("card-start-container");
+const cardQuestion = document.getElementById("card-question");
+const cardQuestionHeader = document.getElementById("card-question-header");
+const cardQuestionAnswersList = document.getElementById("card-question-answers").children[0];
+const cardFinalScore = document.getElementById("card-final-score-container");
+const finalScore = document.getElementById("final-score");
+const endHeader = document.getElementById("end-header");
+const timer = document.getElementById("timeleft-label");
+const formEl = document.getElementById("highscore-form");
+const answer1 = document.getElementById("answer1");
+const answer2 = document.getElementById("answer2");
+const answer3 = document.getElementById("answer3");
+const answer4 = document.getElementById("answer4");
+const answers = [answer1, answer2, answer3, answer4];
 
 var questionIndex = 0;
 var timeLeft = 90;
 var timerText = "Time Left: " + timeLeft + " s left"
 timer.innerHTML = timerText;
 var interval;
+var endScore = 0;
 
 class question {
 	constructor(q,a,b) {
@@ -39,25 +41,25 @@ class question {
 	}
 }
 
-var question1 = new question(
+const question1 = new question(
 	"What characters surround a string?",
 	["Parentheses", "Quotation marks", "Exclamation marks", "Commas"],
 	[false, true, false, false]
 );
-var question2 = new question(
+const question2 = new question(
 	"What HTML tag is used to reference a CSS file?",
 	["&ltscript&gt", "&ltbr&gt", "&ltp&gt", "&ltlink&gt"],
 	[false, false, false, true]
 );
 
-var question3 = new question(
+const question3 = new question(
 	"Using the flex model, which property allows  the elements of a flexbox to be vertically centered?",
 	["align-items", "justify-items", "display", "flex"],
 	[true, false, false, false]
 )
 
 
-var questions = [question1, question2, question3];
+const questions = [question1, question2, question3];
 
 function startQuiz() {
 	startButton.addEventListener("click", function(event) {
@@ -66,6 +68,14 @@ function startQuiz() {
 		cardQuestion.setAttribute("class", "card-question show")
 		displayNextQuestion(event);
 	})
+	formEl.addEventListener("submit", function (event) {
+		event.preventDefault();
+		var highscoreName = document.getElementById("highscore-name").value;
+		var highscore = [highscoreName, endScore];
+		localStorage.setItem("highScore", JSON.stringify(highscore));
+
+	})
+
 }
 function startTimer() {
 	interval = setInterval(function() {
@@ -79,10 +89,11 @@ function startTimer() {
 }
 
 function endQuiz() {
+	endScore = calculateScore();
 	clearInterval(interval);
 	cardQuestion.setAttribute("class", "card-question hide");
 	cardFinalScore.setAttribute("class", "card-final-score-container show");
-	finalScore.innerHTML = "Your final score is " + Math.round(calculateScore());
+	finalScore.innerHTML = "Your final score is " + Math.round(endScore);
 }
 
 function calculateScore() {
