@@ -90,15 +90,11 @@ function calculateScore() {
 }
 
 function displayNextQuestion(event) {
-	var selectedAnswerId = event.path[0].getAttribute("data-id");
-	if (questionIndex !== 0 && 
-		!questions[questionIndex - 1].answerBools[selectedAnswerId]) {
-			timeLeft -= 10;	
-			timer.innerHTML = timeLeft + " seconds left";
-	}
+	checkAnswer(event);	
 	console.log(questionIndex);
 	console.log(questions.length);
 	if (questionIndex !== 1 && questionIndex > questions.length - 1) {
+		checkAnswer(event);
 		endHeader.innerHTML = "Quiz completed!";
 		endQuiz();
 		return;
@@ -117,6 +113,56 @@ function displayNextQuestion(event) {
 		answers[i].innerHTML = (i+1) + ". " + answer;
 	}
 	questionIndex++;
+}
+function checkAnswer(event) {
+	var selectedAnswerId = event.path[0].getAttribute("data-id");
+	var answerBool = false;
+
+	if (questionIndex !== 0) {
+		answerBool = questions[questionIndex - 1].answerBools[selectedAnswerId];
+	
+		if (!answerBool) {
+				displayWrong();
+				timeLeft -= 10;	
+				timer.innerHTML =  "Time Left: " + timeLeft + " s left";
+		} else if (answerBool) {
+			displayCorrect();
+		}
+	}
+}
+
+function displayWrong() {
+	var headerTimer = document.getElementById("header-timer");
+	var ulEl = document.getElementById("answer4").parentElement.parentElement;
+	
+	headerTimer.setAttribute("class", "header-timer-container show");
+	ulEl.classList.add("wrong");
+
+	var displayTimer = 1;
+	var interval1 = setInterval(function() {
+		displayTimer--;
+		if (displayTimer === 0) {
+			headerTimer.setAttribute("class", "header-timer-container hide");
+			ulEl.classList.remove("wrong");
+			clearInterval(interval1);
+		}
+	}, 1000)
+	return;
+}
+
+function displayCorrect() {
+	var ulEl = document.getElementById("answer4").parentElement.parentElement;
+	ulEl.classList.add("correct");
+
+	var displayTimer = 1;
+	var displayInterval = setInterval(function() {
+		displayTimer--;
+		if (displayTimer === 0) {
+			ulEl.classList.remove("correct");
+			clearInterval(displayInterval);
+		}
+	}, 1000)
+	return;
 }
 
 startQuiz();

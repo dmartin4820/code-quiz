@@ -46,6 +46,16 @@ header {
 	justify-content: flex-end;
 }
 
+.header-timer-container.show::before {
+	color: yellow;
+	content: "-10";
+}
+
+.header-timer-container.hide::after {
+	display: none;
+	content: "";
+}
+
 main {
 	width: 100%;
 	height: auto;
@@ -87,8 +97,9 @@ main {
 
 .button:hover {
 	color: yellow;
-	text-shadow: 0px 2px 3px yellow;
+	text-shadow: 0px 0px 25px yellow;
 }
+
 
 .card-question.show {
 	width: 100%;
@@ -119,9 +130,19 @@ main {
 	flex-direction: column;
 }
 
+
 .card-question-answers ul li {
 	display: inline;
 	padding: 15px;
+}
+
+.card-question-answers ul.correct::after {
+	color: yellow;
+	content: "Correct!";
+}
+.card-question-answers ul.wrong::after {
+	color: yellow;
+	content: "Wrong!";
 }
 
 .card-final-score-container.show {
