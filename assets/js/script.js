@@ -66,8 +66,24 @@ const question3 = new question(
 	[true, false, false, false]
 )
 
+const question4 = new question(
+	"How do you write 24 in binary?",
+	["2" + "24".sup(), "0011000", "1111", "0110"],
+	[false, true, false, false]
+)
 
-const questions = [question1, question2, question3];
+const question5 = new question(
+	"What is the largest decimal that can be represented by 8 bits?",
+	["2", "8", "255", "16"],
+	[false, false, true, false]
+)
+
+const question6 = new question(
+	"What's the first thing every programmer must program?",
+	["variable declaration", "Hello, World!", "nothing", "if statement"],
+	[false, true, false, false]
+)
+const questions = [question1, question2, question3, question4, question5, question6];
 
 function startQuiz() {
 	startButton.addEventListener("click", function(event) {
@@ -114,15 +130,22 @@ function endQuiz() {
 			var storedScores = JSON.parse(localStorage.getItem("highScores"));
 		
 			if (storedScores === null) {
-				localStorage.setItem("highScores", JSON.stringify([[highScoreName, endScore]]));
+				localStorage.setItem("highScores", JSON.stringify([{name: highScoreName, score: endScore}]));
 			} else {
-				storedScores.push([highScoreName, endScore]);
+				storedScores.push({name: highScoreName, score: endScore});
 				localStorage.setItem("highScores", JSON.stringify(storedScores));
 			}
 			submitBtn.dataset.submitted = "true";
+
+			storedScores = JSON.parse(localStorage.getItem("highScores"));
+
+			storedScores.sort(function(a,b){return b.score - a.score});
+			localStorage.setItem("highScores", JSON.stringify(storedScores));
 		}
 		populateHighscores(event)
 	})
+
+
 
 	playAgain.addEventListener("click", function(){
 		location.reload();
@@ -148,7 +171,7 @@ function populateHighscores(event) {
 		highScores = JSON.parse(highScores);	
 		for (var i = 0; i < highScores.length; i++) {
 			var listItem = document.createElement("li");		
-			listItem.innerHTML = highScores[i][0] + " - " + highScores[i][1];
+			listItem.innerHTML = highScores[i].name + " - " + highScores[i].score;
 			highscoresSection.appendChild(orderedList);
 			orderedList.appendChild(listItem);
 		}
@@ -167,6 +190,7 @@ function clearScores(highscoresSection) {
 	}
 	return;
 }
+
 function displayNextQuestion(event) {
 	checkAnswer(event);	
 	console.log(questionIndex);
@@ -242,5 +266,4 @@ function displayCorrect() {
 	}, 1000)
 	return;
 }
-
 startQuiz();
