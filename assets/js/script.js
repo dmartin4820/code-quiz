@@ -76,10 +76,10 @@ function startQuiz() {
 		cardQuestion.setAttribute("class", "card-question show")
 		displayNextQuestion(event);
 	})
-	viewHighscores.addEventListener("click", function() {
+	viewHighscores.addEventListener("click", function(event) {
 		quiz.setAttribute("class", "quiz hide");
 		highScoresPage.setAttribute("class", "highscores-page");
-		populateHighscores();
+		populateHighscores(event);
 	})
 	goBack.addEventListener("click", function() {
 		highScoresPage.setAttribute("class", "highscores-page hide");
@@ -121,7 +121,7 @@ function endQuiz() {
 			}
 			submitBtn.dataset.submitted = "true";
 		}
-		populateHighscores()
+		populateHighscores(event)
 	})
 
 	playAgain.addEventListener("click", function(){
@@ -135,33 +135,38 @@ function calculateScore() {
 	return Math.round(100 * timeLeft/90);
 }
 
-function populateHighscores() {
+function populateHighscores(event) {
 	quiz.setAttribute("class", "quiz hide");
 	highScoresPage.setAttribute("class", "highscores-page");
-
-	if (highScoreList.dataset.populated === "false"){
-		var highScores = localStorage.getItem("highScores");
-		if (highScores !== null) {
-			highScores = JSON.parse(highScores);
-			for (var i = 0; i < highScores.length; i++) {
-				var listItem = document.createElement("li");
-				listItem.innerHTML = highScores[i][0] + " - " + highScores[i][1];
-				highScoreList.appendChild(listItem);
-			}
-		}
-		highScoreList.dataset.populated = "true";
-	}
 	
-	clearHighscores.addEventListener("click", function() {
-		var length = highScoreList.childElementCount;
-		for (var i = 0; i < length; i++) {
-			highScoreList.remove(highScoreList.children[i]);
-			localStorage.clear();
+	var highscoresSection = document.getElementById("highscores-section");
+	var orderedList = document.createElement("ol");
+	var highScores = localStorage.getItem("highScores");	
+	
+	if (highScores !== null) {
+		clearScores(highscoresSection);
+		highScores = JSON.parse(highScores);	
+		for (var i = 0; i < highScores.length; i++) {
+			var listItem = document.createElement("li");		
+			listItem.innerHTML = highScores[i][0] + " - " + highScores[i][1];
+			highscoresSection.appendChild(orderedList);
+			orderedList.appendChild(listItem);
 		}
-	})
+	}
 
+	clearHighscores.addEventListener("click", function() {
+		clearScores(highscoresSection);
+		localStorage.clear()	
+	})
 }
 
+function clearScores(highscoresSection) {
+	var child = highscoresSection.firstChild;
+	if (child !== null) {
+		highscoresSection.removeChild(child);
+	}
+	return;
+}
 function displayNextQuestion(event) {
 	checkAnswer(event);	
 	console.log(questionIndex);
@@ -238,5 +243,4 @@ function displayCorrect() {
 	return;
 }
 
-//populateHighscores();
 startQuiz();
