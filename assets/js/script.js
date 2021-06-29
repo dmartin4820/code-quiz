@@ -5,6 +5,11 @@ const cardQuestionHeader = document.getElementById("card-question-header");
 const cardQuestionAnswersList = document.getElementById("card-question-answers").children[0];
 const cardFinalScore = document.getElementById("card-final-score-container");
 const finalScore = document.getElementById("final-score");
+const goBack = document.getElementById("go-back");
+const clearHighscores = document.getElementById("clear-highscores");
+const highScoreList = document.getElementById("highscore-list");
+const quiz = document.getElementById("quiz");
+const highScoresPage = document.getElementById("highscores-page");
 const endHeader = document.getElementById("end-header");
 const timer = document.getElementById("timeleft-label");
 const formEl = document.getElementById("highscore-form");
@@ -68,6 +73,10 @@ function startQuiz() {
 		cardQuestion.setAttribute("class", "card-question show")
 		displayNextQuestion(event);
 	})
+	goBack.addEventListener("click", function() {
+		highScoresPage.setAttribute("class", "highscores-page hide");
+		quiz.setAttribute("class", "quiz");
+	})
 }
 function startTimer() {
 	interval = setInterval(function() {
@@ -109,19 +118,32 @@ function calculateScore() {
 }
 
 function populateHighscores() {
-	var highScoreList = document.getElementById("highscore-list");
-	var quiz = document.getElementById("quiz");
-	var highScoresPage = document.getElementById("highscores-page");
-	
 	quiz.setAttribute("class", "quiz hide");
 	highScoresPage.setAttribute("class", "highscores-page");
 
-	var highScores = JSON.parse(localStorage.getItem("highScores"));
-	for (var i = 0; i < highScores.length; i++) {
-		var listItem = document.createElement("li");
-		listItem.innerHTML = highScores[i][0] + " - " + highScores[i][1];
-		highScoreList.appendChild(listItem);
+	var highScores = localStorage.getItem("highScores");
+	if (highScores !== null) {
+		highScores = JSON.parse(highScores);
+		for (var i = 0; i < highScores.length; i++) {
+			var listItem = document.createElement("li");
+			listItem.innerHTML = highScores[i][0] + " - " + highScores[i][1];
+			highScoreList.appendChild(listItem);
+		}
 	}
+
+	goBack.addEventListener("click", function() {
+		location.reload();
+	})
+
+	console.log(window)
+	clearHighscores.addEventListener("click", function() {
+		var length = highScoreList.childElementCount;
+		for (var i = 0; i < length; i++) {
+			highScoreList.remove(highScoreList.children[i]);
+			localStorage.clear();
+		}
+	})
+
 }
 
 function displayNextQuestion(event) {
@@ -200,4 +222,5 @@ function displayCorrect() {
 	return;
 }
 
+//populateHighscores();
 startQuiz();

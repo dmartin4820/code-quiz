@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div class="page-container">
-		<section class="quiz" id="quiz">
+		<section class="quiz hide" id="quiz">
 			<header>
 				<div class="header-highscores-container ">
 					<a href="#" class="highscores button">View Highscores</a>
@@ -59,10 +59,14 @@
 				</div>
 			</main>
 		</section>
-		<section class="highscores-page hide" id="highscores-page">
+		<section class="highscores-page" id="highscores-page">
 			<main>
 				<h1>Highscores</h1>
 				<ol id="highscore-list"></ol>
+				<div class="highscores-buttons">
+					<button type="button" id="go-back" class="button">Go Back</button>
+					<button type="button" id="clear-highscores" class="button">Clear Highscores</button>
+				</div>
 			</main>
 
 		</section>
