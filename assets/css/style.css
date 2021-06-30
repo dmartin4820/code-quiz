@@ -143,10 +143,12 @@ main {
 
 .card-question-answers ul.correct::after {
 	color: yellow;
+	font-size: 2rem;
 	content: "Correct!";
 }
 .card-question-answers ul.wrong::after {
 	color: yellow;
+	font-size: 2rem;
 	content: "Wrong!";
 }
 

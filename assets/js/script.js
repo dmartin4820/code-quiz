@@ -49,6 +49,7 @@ class question {
 	}
 }
 
+//Create question objs containing their answers and their associated correct boolean
 const question1 = new question(
 	"What characters surround a string?",
 	["Parentheses", "Quotation marks", "Exclamation marks", "Commas"],
@@ -85,10 +86,20 @@ const question6 = new question(
 )
 const questions = [question1, question2, question3, question4, question5, question6];
 
+/* This function handles the first page that is loaded when the site is opened. 
+ * The start button listener clears the greeting card and displays the next question.
+ * The highscores button listener will clear the page and display sorted highscores.
+ * the go back listener has no functionality on the opening page, but instead on the 
+ * highscores page.
+ */
 function startQuiz() {
 	startButton.addEventListener("click", function(event) {
 		startTimer();
+		//These two lines are the same structure used throughout to flip between questions
+		//by hiding and displaying content while filling them in with DOM manipulation.
+		//This line hides the opening text
 		startButtonContainer.setAttribute("class", "card-start-container hide");
+		//This line will display the first question
 		cardQuestion.setAttribute("class", "card-question show")
 		displayNextQuestion(event);
 	})
@@ -102,6 +113,10 @@ function startQuiz() {
 		quiz.setAttribute("class", "quiz");
 	})
 }
+
+/* This function sets up the timer that runs when the start button is pressed.
+ * When time is up, the endQuiz function will immediately switch to the scores page.
+ */
 function startTimer() {
 	interval = setInterval(function() {
 		timeLeft--;
@@ -113,9 +128,14 @@ function startTimer() {
 	}, 1000);
 }
 
+/* This function performs the end of quiz routine. When called it will swap to the 
+ * final page with the current score and a form to submit to highscores. Once the score
+ * is submitted, the player name and score are sorted and stored within the domain's local storage.
+ * The play again button is also handled here.
+ */
 function endQuiz() {
 	endScore = calculateScore();
-	clearInterval(interval);
+	clearInterval(interval);//stops the timer
 	cardQuestion.setAttribute("class", "card-question hide");
 	cardFinalScore.setAttribute("class", "card-final-score-container show");
 	finalScore.innerHTML = "Your final score is " + endScore;
@@ -154,10 +174,16 @@ function endQuiz() {
 
 }
 
+/* Calculate the score using some arbitrary fraction of the time left*/
 function calculateScore() {
 	return Math.round(100 * timeLeft/90);
 }
 
+/* This function handles the displaying of the highscores. First the highscore page is shown
+ * then highscores are taken from local storage and displayed on the page by appending the scores
+ * within a list element to a newly created ordered list. THe clear highscore listener will 
+ * run a function to clear scores and deletes items in the local storage.
+ */
 function populateHighscores(event) {
 	quiz.setAttribute("class", "quiz hide");
 	highScoresPage.setAttribute("class", "highscores-page");
@@ -183,6 +209,10 @@ function populateHighscores(event) {
 	})
 }
 
+/* The clearScores function takes the pointer to the element containing the 
+ * ordered list of scores and uses it to remove the ordered list to clear the 
+ * highscores page.
+ */
 function clearScores(highscoresSection) {
 	var child = highscoresSection.firstChild;
 	if (child !== null) {
@@ -191,10 +221,16 @@ function clearScores(highscoresSection) {
 	return;
 }
 
+/* The displayNextQuestion function does the majority of the work when switching questions.
+ * The function first does some checks: one on whether the last question answered was correct or
+ * wrong; the other on whether there are anymore questions. Until there is a click detected,
+ * The new question is display and the questionIndex increments to track of the place withing the 
+ * questions list
+ */
 function displayNextQuestion(event) {
 	checkAnswer(event);	
-	console.log(questionIndex);
-	console.log(questions.length);
+	//console.log(questionIndex);
+	//console.log(questions.length);
 	if (questionIndex !== 1 && questionIndex > questions.length - 1) {
 		checkAnswer(event);
 		endHeader.innerHTML = "Quiz completed!";
@@ -216,8 +252,14 @@ function displayNextQuestion(event) {
 	}
 	questionIndex++;
 }
+
+/* Checks a selected answer to the correct answer. If not right, deduct time and display that
+ * as the user progresses to the next question. If right, then display correct and don't deduct time.
+ */
 function checkAnswer(event) {
-	var selectedAnswerId = event.path[0].getAttribute("data-id");
+	console.log(event);	
+	var selectedAnswerId = event.target.getAttribute("data-id");
+	
 	var answerBool = false;
 
 	if (questionIndex !== 0) {
@@ -233,6 +275,9 @@ function checkAnswer(event) {
 	}
 }
 
+/* The following two functions handle the displaying of the correct and wrong text that appears
+ * after every question.
+ */
 function displayWrong() {
 	var headerTimer = document.getElementById("header-timer");
 	var ulEl = document.getElementById("answer4").parentElement.parentElement;
